@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>高一(6)班出入登记系统</title>
+    <script src="chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body onselectstart="return false">
+    <div class="container fullscreen-active">
+        <div id="mainContent">
+            <header class="frosted">
+                <div class="mode-control">
+                    <button id="registrationMode" class="mode-btn active">任务模式</button>
+                    <button id="swapMode" class="mode-btn">领域模式</button>
+                    <button id="statsMode" class="mode-btn">存档记录</button>
+                </div>
+                <div id="modeIndicator" class="mode-indicator registration-mode">任务模式：外出任务记录</div>
+            </header>
+            <div class="main-content-container">
+                <div id="mainContentArea" class="main-content">
+                    <div class="sidebar frosted">
+                        <div class="sidebar-title">系统公告</div>
+                        <div class="task-manager">
+                            <div class="task-input">
+                                <input type="text" id="taskInput" placeholder="输入新公告...">
+                                <button id="addTaskBtn">添加</button>
+                            </div>
+                            <ul id="taskList" class="task-list"></ul>
+                        </div>
+                    </div>
+                    <div class="classroom frosted">
+                        <div id="seatsGrid" class="seats-grid"></div>
+                    </div>
+                    <div class="office frosted">
+                        <div class="office-title">任务地图</div>
+                        <div class="office-container">
+                            <div class="office-floor">
+                                <div class="floor-title"></div>
+                                <div class="office-box" data-office="语文">语文</div>
+                                <div class="office-box" data-office="地理">地理</div>
+                                <div class="office-box" data-office="技术">技术</div>
+                            </div>
+                            <div class="office-floor">
+                                <div class="floor-title"></div>
+                                <div class="office-box" data-office="数学">数学</div>
+                                <div class="office-box" data-office="政治">政治</div>
+                                <div class="office-box" data-office="历史">历史</div>
+                            </div>
+                            <div class="office-floor">
+                                <div class="floor-title"></div>
+                                <div class="office-box" data-office="物理">物理</div>
+                                <div class="office-box" data-office="化学">化学</div>
+                                <div class="office-box" data-office="生物">生物</div>
+                            </div>
+                            <div class="office-floor">
+                                <div class="floor-title"></div>
+                                <div class="office-box" data-office="外语">外语</div>
+                                <div class="office-box yuxugong-box" data-office="玉虚宫">玉虚宫</div>
+                                <div class="office-box offline-box" data-office="已离线">已离线</div>
+                            </div>
+                            <div class="office-floor">
+                                <div class="floor-title"></div>
+                                <div class="office-box other-full-width-half-height" data-office="其它">其它</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="statisticsSection" class="statistics-section">
+                    <!-- 新增：图表容器 -->
+                    <div class="chart-container frosted">
+                        <h3>近7天各办公室来往人数</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="officeVisitsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-container frosted">
+                        <h3>近7天出教室时间最长的5名学生</h3>
+                        <div class="chart-wrapper">
+                            <canvas id="studentTimeChart"></canvas>
+                        </div>
+                    </div>
+                    <!-- 图表容器结束 -->
+                     <div class="statistics frosted">
+                        <table class="stats-table">
+                            <thead>
+                                <tr>
+                                    <th>玩家</th>
+                                    <th>总任务次数</th>
+                                    <th>总任务时长</th>
+                                    <th>历史任务</th>
+                                    <th>违纪次数</th>
+                                    <th>历史违纪</th>
+                                </tr>
+                            </thead>
+                            <tbody id="statsTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

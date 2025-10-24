@@ -1,0 +1,576 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Microsoft YaHei', sans-serif;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    transform: translateZ(0);
+    touch-action: manipulation; /* 防止触摸时的默认滚动/缩放，允许拖拽 */
+}
+html,
+body {
+    height: 100%;
+    background: #121212;
+    color: #e0e0e0;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+input, textarea, .task-input input, .delete-confirm-form input {
+    -webkit-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+}
+
+.frosted {
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.container {
+    cursor: url("data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2240%22 height=%2240%22 viewBox=%220 0 40 40%22%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2220%22 fill=%22rgba(64,64,64,0.5)%22/%3E%3Ccircle cx=%2220%22 cy=%2220%22 r=%2212%22 fill=%22rgba(32,32,32,0.8)%22/%3E%3C/svg%3E") 20 20, auto;
+    transition: cursor 0.3s ease;
+    background-image: url('bg.jpg');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    background-color: rgba(30, 30, 30, 0.3);
+    box-shadow: none;
+    padding: 0;
+    position: relative;
+    display: none;
+    overflow: auto; /* 初始为 auto */
+    z-index: 900;
+}
+.container.fullscreen-active {
+    display: block;
+}
+header {
+    text-align: center;
+    width: 100%;
+    margin-bottom: 10px;
+    padding: 10px 0;
+    background-color: rgba(40, 40, 40, 0.3);
+    border-radius: 10px;
+    margin: 10px;
+    z-index: 910;
+}
+.mode-control {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    background-color: rgba(40, 40, 40, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 10px 10px 10px;
+    z-index: 910;
+}
+.mode-btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all 0.3s;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+    z-index: 910;
+    color: white;
+}
+#registrationMode {
+    background: rgba(66, 133, 244, 0.7);
+    color: white;
+}
+#registrationMode.active {
+    background: rgba(66, 133, 244, 0.9);
+    box-shadow: 0 0 15px rgba(66, 133, 244, 0.8);
+}
+.mode-btn.active {
+    box-shadow: 0 0 0 4px rgba(100, 80, 200, 0.1);
+    transform: scale(1.05);
+}
+
+/* 领域模式按钮 - 紫色 */
+#swapMode {
+    background-color: #800080;
+}
+#swapMode.active {
+    background-color: #a040a0;
+    box-shadow: 0 0 15px #800080;
+}
+
+/* 存档记录按钮 - 绿色 */
+#statsMode {
+    background-color: #008000;
+}
+#statsMode.active {
+    background-color: #00a000;
+    box-shadow: 0 0 15px #008000;
+}
+.mode-indicator {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    background-color: rgba(60, 60, 60, 0.1);
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 10px 10px 10px;
+    font-size: 24px;
+    font-weight: bold;
+    z-index: 910;
+}
+.registration-mode {
+    color: #4285f4;
+}
+.swap-mode {
+    color: #800080;
+}
+.stats-mode {
+    color: #008000;
+}
+.main-content-container {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+    z-index: 910;
+}
+.main-content {
+    display: flex;
+    gap: 0;
+    flex-wrap: nowrap;
+    width: 100%;
+    height: 100%;
+    z-index: 910;
+}
+.statistics-section {
+    display: none;
+    width: 100%;
+    overflow-y: auto;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: rgba(40, 40, 40, 0.4);
+    border-radius: 15px;
+    margin: 10px;
+    z-index: 910;
+}
+.statistics-section.active {
+    display: block;
+}
+/* --- 新增：图表容器样式 --- */
+.chart-container {
+    background-color: rgba(50, 50, 50, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+.chart-container h3 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    text-align: center;
+    color: #d0d0d0;
+}
+.chart-wrapper {
+    position: relative;
+    height: 300px; /* 设置图表容器高度 */
+    width: 100%;
+}
+/* --- 图表样式结束 --- */
+.sidebar {
+    flex: 1;
+    background: rgba(35, 35, 35, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 20%;
+    margin: 10px;
+    z-index: 910;
+}
+.sidebar-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #d0d0d0;
+    font-weight: bold;
+}
+.classroom {
+    flex: 3;
+    background: rgba(45, 45, 45, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    border: none;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin: 10px 10px 10px 0;
+    min-width: 0;
+    z-index: 910;
+}
+.office {
+    flex: 1;
+    background: rgba(35, 35, 35, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    border: none;
+    min-width: 0;
+    height: 100%;
+    margin: 10px 10px 10px 0;
+    z-index: 910;
+}
+.office-title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #d0d0d0;
+    font-weight: bold;
+}
+.seats-grid {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    gap: 8px;
+    padding: 10px;
+    background: rgba(50, 50, 50, 0.1);
+    border-radius: 10px;
+    z-index: 910;
+}
+.seat {
+    width: 100%;
+    aspect-ratio: 1.1;
+    background: rgba(66, 133, 244, 0.5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: all 0.2s;
+    user-select: none;
+    font-size: 24px;
+    padding: 10px;
+    text-align: center;
+    word-break: break-word;
+    hyphens: auto;
+    /* 触摸优化 */
+    -webkit-tap-highlight-color: transparent; /* 移除点击高亮 */
+}
+.seat:hover {
+    background: rgba(66, 133, 244, 0.9);
+}
+.seat.empty {
+    background: rgba(60, 60, 60, 0.4);
+    border: 2px dashed rgba(100, 100, 100, 0.1);
+    color: transparent;
+}
+.seat.violation {
+    background: rgba(219, 68, 55, 0.8);
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0% {
+        background-color: rgba(219, 150, 55, 0.8);
+    }
+    50% {
+        background-color: rgba(255, 180, 100, 0.9);
+    }
+    100% {
+        background-color: rgba(219, 150, 55, 0.8);
+    }
+}
+.stats-table tr.violation-row {
+    background-color: rgba(255, 200, 0, 0.2);
+    animation: yellow-pulse 2s infinite;
+}
+@keyframes yellow-pulse {
+    0% { background-color: rgba(255, 200, 0, 0.2); }
+    50% { background-color: rgba(255, 220, 100, 0.4); }
+    100% { background-color: rgba(255, 200, 0, 0.2); }
+}
+.stats-table tr.violation-row td:first-child {
+    font-weight: bold;
+    animation: yellow-text-pulse 2s infinite;
+}
+@keyframes yellow-text-pulse {
+    0% { color: #d0d0d0; }
+    50% { color: #e74c3c; }
+    100% { color: #d0d0d0; }
+}
+.office-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+    z-index: 910;
+}
+.office-floor {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    flex: 1;
+    z-index: 910;
+}
+.office-floor.fifth-floor {
+    grid-template-columns: 1fr;
+}
+.office-box.other-full-width-half-height {
+    grid-column: 1 / -1;
+    min-height: 45px;
+}
+.floor-title {
+    grid-column: 1 / -1;
+    height: 2px;
+    background: rgba(80, 80, 255, 0.4);
+    margin: 0px 0;
+    border-radius: 0;
+}
+.office-box {
+    background: rgba(70, 65, 100, 0.1);
+    border: 2px solid rgba(100, 100, 100, 0.1);
+    border-radius: 8px;
+    min-height: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: center;
+    transition: all 0.2s;
+    font-size: 24px;
+    z-index: 910;
+    /* 触摸优化 */
+    -webkit-tap-highlight-color: transparent;
+}
+.office-box:hover {
+    background: rgba(70, 65, 100, 0.1);
+}
+.yuxugong-box {
+    background: rgba(60, 80, 100, 0.1);
+}
+.offline-box {
+    background: rgba(80, 80, 80, 0.1);
+}
+.student-in-office {
+    background: rgba(219, 68, 55, 0.8);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 15px;
+    margin-top: 8px;
+    font-size: 18px;
+    overflow: hidden;
+    transition: all 0.2s;
+    width: auto;
+    display: inline-block;
+    z-index: 910;
+    /* 触摸优化 */
+    -webkit-tap-highlight-color: transparent;
+}
+.student-in-office:hover {
+    background: rgba(180, 50, 40, 0.9);
+}
+.office-box.highlight {
+    border-color: rgba(66, 133, 244, 0.8);
+    background-color: rgba(50, 70, 100, 0.1);
+}
+.statistics {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    flex: 1;
+    z-index: 910;
+}
+.stats-table,
+.details-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 10px;
+    font-size: 16px;
+    background-color: rgba(45, 45, 45, 0.1);
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 910;
+}
+.stats-table th,
+.stats-table td,
+.details-table th,
+.details-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(100, 100, 100, 0.1);
+    color: #e0e0e0;
+}
+.stats-table th,
+.details-table th {
+    background-color: rgba(66, 133, 244, 0.8);
+    color: white;
+    position: relative;
+    z-index: 910;
+    font-size: 18px;
+}
+.stats-table thead tr:first-child th:first-child,
+.details-table thead tr:first-child th:first-child {
+    border-top-left-radius: 15px;
+}
+.stats-table thead tr:first-child th:last-child,
+.details-table thead tr:first-child th:last-child {
+    border-top-right-radius: 15px;
+}
+.stats-table tr:nth-child(even),
+.details-table tr:nth-child(even) {
+    background-color: rgba(60, 60, 60, 0.4);
+}
+.details-btn,
+.violation-btn {
+    background: rgba(66, 133, 244, 0.8);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 3px;
+    font-size: 14px;
+    transition: background-color 0.2s;
+    z-index: 910;
+}
+.details-btn:hover,
+.violation-btn:hover {
+    background: rgba(51, 102, 204, 0.9);
+}
+.violation-btn {
+    background: rgba(204, 57, 98, 0.8);
+}
+.violation-btn:hover {
+    background: rgba(173, 48, 83, 0.9);
+}
+.task-manager {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    z-index: 910;
+}
+.task-input {
+    display: flex;
+    margin-bottom: 15px;
+    z-index: 910;
+}
+.task-input input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1px solid rgba(100, 100, 100, 0.7);
+    border-radius: 5px 0 0 5px;
+    font-size: 14px;
+    background-color: rgba(50, 50, 50, 0.1);
+    color: #e0e0e0;
+    z-index: 910;
+}
+.task-input button {
+    padding: 8px 15px;
+    background: rgba(0, 82, 217, 0.8);
+    color: white;
+    border: none;
+    border-radius: 0 5px 5px 0;
+    transition: background-color 0.2s;
+    z-index: 910;
+}
+.task-input button:hover {
+    background: rgba(0, 66, 173, 0.9);
+}
+.task-list {
+    list-style: none;
+    flex: 1;
+    overflow-y: auto;
+    margin: 0;
+    padding: 0;
+    z-index: 910;
+}
+.task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 10px;
+    background: rgba(50, 50, 50, 0.1);
+    border-radius: 5px;
+    margin-bottom: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #e0e0e0;
+    z-index: 910;
+}
+.task-item span {
+    flex: 1;
+    margin-right: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    min-width: 0;
+    word-break: break-word;
+    hyphens: auto;
+}
+.task-item button {
+    background: rgba(219, 68, 55, 0.8);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    font-size: 14px;
+    margin-left: 5px;
+    transition: background-color 0.2s;
+    z-index: 910;
+}
+.task-item button:hover {
+    background: rgba(180, 50, 40, 0.9);
+}
+/* 新增：用于触摸拖拽时的视觉反馈 */
+.dragging-over {
+    background-color: rgba(100, 200, 255, 0.3) !important;
+    border-color: rgba(100, 200, 255, 0.8) !important;
+}
+/* 新增：拖动预览元素的样式 */
+.touch-drag-preview {
+    position: absolute;
+    z-index: 1000;
+    pointer-events: none; /* 防止预览元素干扰触摸事件 */
+    background-color: rgba(66, 133, 244, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 8px;
+    font-size: 24px;
+    text-align: center;
+    transform: translate(-50%, -50%); /* 使元素中心对齐手指 */
+    user-select: none; /* 防止选中 */
+}
+
+/* 响应式设计 - 适配各种屏幕尺寸和形状 */
+@media (max-width: 810px), 
+       (max-height: 720px),
+       (max-aspect-ratio: 4/3),
+       (orientation: portrait) {
+    .sidebar, .office {
+        display: none;
+    }
+    .main-content {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .classroom {
+        margin: 10px;
+        min-height: 300px;
+    }
+}

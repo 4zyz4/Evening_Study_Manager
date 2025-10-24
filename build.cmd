@@ -1,0 +1,1 @@
+nuitka --standalone --enable-plugin=tk-inter --windows-console-mode=disable main.py
