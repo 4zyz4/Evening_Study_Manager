@@ -1409,4 +1409,3 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('应用初始化失败:', error);
     });
 });
-
