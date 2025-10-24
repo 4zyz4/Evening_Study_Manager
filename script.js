@@ -450,7 +450,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const studentName = appState.currentStudents[i];
                 seat.textContent = studentName;
                 seat.dataset.student = studentName;
-                if (appState.studentsInOffice[studentName]) {
+                // 添加判断：如果学生名是空格或已被标记为离开，则显示为空座位样式
+                if (appState.studentsInOffice[studentName] || studentName.trim() === '') {
                     seat.className = 'seat empty';
                     seat.draggable = false;
                     seat.textContent = '';
