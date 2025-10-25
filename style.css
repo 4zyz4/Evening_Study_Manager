@@ -47,10 +47,42 @@ input, textarea, .task-input input, .delete-confirm-form input {
     box-shadow: none;
     padding: 0;
     position: relative;
-    display: none;
-    overflow: auto; /* 初始为 auto */
+    display: block; /* 始终显示 */
+    overflow-x: hidden;
+    overflow-y: auto;
     z-index: 900;
+    aspect-ratio: 16/9;
+    margin: 0 auto;
+    
+    /* 添加缩放变换，使在小屏幕上等比例缩小 */
+    transform-origin: center;
+    transform: scale(1);
 }
+
+/* 当屏幕宽度小于最大宽度时，按比例缩放 */
+@media (max-width: 1439px) {
+    .container {
+        transform: scale(calc(100vw / 1440));
+        transform-origin: top center;
+    }
+}
+
+/* 当屏幕高度小于最大高度时，按比例缩放 */
+@media (max-height: 809px) and (min-width: 1440px) {
+    .container {
+        transform: scale(calc(100vh / 810));
+        transform-origin: center left;
+    }
+}
+
+/* 当屏幕同时小于宽度和高度时，选择较小的缩放比例 */
+@media (max-width: 1439px) and (max-height: 809px) {
+    .container {
+        transform: scale(min(calc(100vw / 1440), calc(100vh / 810)));
+        transform-origin: top left;
+    }
+}
+
 .container.fullscreen-active {
     display: block;
 }
@@ -141,7 +173,7 @@ header {
 .main-content-container {
     display: flex;
     width: 100%;
-    height: 100%;
+    height: calc(100% - 140px); /* 减去header和按钮区域的高度 */
     padding: 0 10px;
     z-index: 910;
 }
@@ -219,7 +251,9 @@ header {
     margin: 10px 10px 10px 0;
     min-width: 0;
     z-index: 910;
+    overflow: hidden; /* 添加此行以防止内容溢出 */
 }
+
 .office {
     flex: 1;
     background: rgba(35, 35, 35, 0.3);
@@ -246,7 +280,9 @@ header {
     background: rgba(50, 50, 50, 0.1);
     border-radius: 10px;
     z-index: 910;
+    overflow: hidden; /* 添加此行以确保网格内容不会溢出 */
 }
+
 .seat {
     width: 100%;
     aspect-ratio: 1.1;
@@ -265,7 +301,33 @@ header {
     hyphens: auto;
     /* 触摸优化 */
     -webkit-tap-highlight-color: transparent; /* 移除点击高亮 */
+    /* 添加以下属性确保座位不会溢出 */
+    min-width: 0;
+    min-height: 0;
+    box-sizing: border-box;
 }
+
+/* 当屏幕宽度小于最大宽度时，减小座位上的字体大小 */
+@media (max-width: 1439px) {
+    .seat {
+        font-size: calc(24px * (100vw / 1440));
+    }
+}
+
+/* 当屏幕高度小于最大高度时，减小座位上的字体大小 */
+@media (max-height: 809px) and (min-width: 1440px) {
+    .seat {
+        font-size: calc(24px * (100vh / 810));
+    }
+}
+
+/* 当屏幕同时小于宽度和高度时，选择较小的字体比例 */
+@media (max-width: 1439px) and (max-height: 809px) {
+    .seat {
+        font-size: calc(24px * min((100vw / 1440), (100vh / 810)));
+    }
+}
+
 .seat:hover {
     background: rgba(66, 133, 244, 0.9);
 }
@@ -459,12 +521,15 @@ header {
     padding-bottom: 10px;
     box-sizing: border-box;
     z-index: 910;
+    overflow: hidden; /* 添加此行以防止内容溢出 */
 }
+
 .task-input {
     display: flex;
     margin-bottom: 15px;
     z-index: 910;
 }
+
 .task-input input {
     flex: 1;
     padding: 8px 12px;
@@ -474,7 +539,10 @@ header {
     background-color: rgba(50, 50, 50, 0.1);
     color: #e0e0e0;
     z-index: 910;
+    min-width: 0; /* 添加此行以防止输入框溢出 */
+    box-sizing: border-box; /* 添加此行确保padding包含在宽度内 */
 }
+
 .task-input button {
     padding: 8px 15px;
     background: rgba(0, 82, 217, 0.8);
@@ -483,10 +551,10 @@ header {
     border-radius: 0 5px 5px 0;
     transition: background-color 0.2s;
     z-index: 910;
+    white-space: nowrap; /* 添加此行防止按钮文本换行 */
+    box-sizing: border-box; /* 添加此行确保padding包含在宽度内 */
 }
-.task-input button:hover {
-    background: rgba(0, 66, 173, 0.9);
-}
+
 .task-list {
     list-style: none;
     flex: 1;
@@ -494,7 +562,9 @@ header {
     margin: 0;
     padding: 0;
     z-index: 910;
+    overflow-x: hidden; /* 添加此行防止水平滚动 */
 }
+
 .task-item {
     display: flex;
     justify-content: space-between;
@@ -512,6 +582,7 @@ header {
     color: #e0e0e0;
     z-index: 910;
 }
+
 .task-item span {
     flex: 1;
     margin-right: 10px;
@@ -522,6 +593,7 @@ header {
     word-break: break-word;
     hyphens: auto;
 }
+
 .task-item button {
     background: rgba(219, 68, 55, 0.8);
     color: white;
@@ -533,14 +605,17 @@ header {
     transition: background-color 0.2s;
     z-index: 910;
 }
+
 .task-item button:hover {
     background: rgba(180, 50, 40, 0.9);
 }
+
 /* 新增：用于触摸拖拽时的视觉反馈 */
 .dragging-over {
     background-color: rgba(100, 200, 255, 0.3) !important;
     border-color: rgba(100, 200, 255, 0.8) !important;
 }
+
 /* 新增：拖动预览元素的样式 */
 .touch-drag-preview {
     position: absolute;
@@ -556,21 +631,4 @@ header {
     user-select: none; /* 防止选中 */
 }
 
-/* 响应式设计 - 适配各种屏幕尺寸和形状 */
-@media (max-width: 810px), 
-       (max-height: 720px),
-       (max-aspect-ratio: 4/3),
-       (orientation: portrait) {
-    .sidebar, .office {
-        display: none;
-    }
-    .main-content {
-        display: flex;
-        flex-direction: column;
-        gap: 10px;
-    }
-    .classroom {
-        margin: 10px;
-        min-height: 300px;
-    }
-}
+/* 已为16:9屏幕优化，移除原来的响应式设计 */

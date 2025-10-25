@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function handleTouchStart(e) {
         if (e.touches.length > 1) return;
         const studentName = this.dataset.student;
-        if (!studentName || appState.studentsInOffice[studentName]) return;
+        if (!studentName || appState.studentsInOffice[studentName] || studentName === " ") return;
         touchDraggedStudent = this;
         isLongPress = false;
         longPressStartTime = Date.now();

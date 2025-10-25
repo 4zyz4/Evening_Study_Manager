@@ -5,17 +5,17 @@
     "薛张佰洲",
     "吴铭杰",
     "张雨泽",
-    "查萱璐",
     "吴雨菲",
-    " ",
+    "陈博远",
+    "查萱璐",
     "洪心诺",
     "陈钰文",
     "邬雨峻",
     "赵紫雯",
     "周睿涵",
     "陈天奕",
+    "魏科皓",
     "杨璐萱",
-    "胡馨文",
     "范雨汐",
     "虞诗铭",
     "严觅尔",
@@ -28,8 +28,8 @@
     "宋歌",
     "张依婷",
     "卓悦",
-    "魏科皓",
-    "陈博远",
+    "胡馨文",
+    " ",
     "郑耀鹏",
     "潘昊岩",
     "谢紫宁",
@@ -77,14 +77,37 @@
       "records": []
     },
     "查萱璐": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 1,
+      "totalDuration": 1,
+      "records": [
+        {
+          "departureTime": 1761371672010,
+          "office": "语文",
+          "returnTime": 1761371673514,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "吴雨菲": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 2,
+      "totalDuration": 2,
+      "records": [
+        {
+          "departureTime": 1761371674749,
+          "office": "数学",
+          "returnTime": 1761371675403,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1761371746847,
+          "office": "语文",
+          "returnTime": 1761371751070,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "邱雨馨": {
       "count": 0,
@@ -112,14 +135,30 @@
       "records": []
     },
     "周睿涵": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 1,
+      "totalDuration": 1,
+      "records": [
+        {
+          "departureTime": 1761372351395,
+          "office": "物理",
+          "returnTime": 1761372355031,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "陈天奕": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 1,
+      "totalDuration": 1,
+      "records": [
+        {
+          "departureTime": 1761372353777,
+          "office": "数学",
+          "returnTime": 1761372354373,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "杨璐萱": {
       "count": 0,
@@ -127,9 +166,17 @@
       "records": []
     },
     "胡馨文": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 1,
+      "totalDuration": 1,
+      "records": [
+        {
+          "departureTime": 1761371750373,
+          "office": "数学",
+          "returnTime": 1761371752627,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "范雨汐": {
       "count": 0,
@@ -157,9 +204,24 @@
       "records": []
     },
     "戴清水": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 2,
+      "totalDuration": 2,
+      "records": [
+        {
+          "departureTime": 1761372351012,
+          "office": "化学",
+          "returnTime": 1761372355667,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1761372486255,
+          "office": "数学",
+          "returnTime": 1761372487654,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "杨广瀚": {
       "count": 0,
@@ -202,9 +264,24 @@
       "records": []
     },
     "何鑫": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 2,
+      "totalDuration": 2,
+      "records": [
+        {
+          "departureTime": 1761372338358,
+          "office": "化学",
+          "returnTime": 1761372339347,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1761372490148,
+          "office": "政治",
+          "returnTime": 1761372490843,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "郑耀鹏": {
       "count": 0,
@@ -343,5 +420,5 @@
     " ": []
   },
   "tasks": [],
-  "timestamp": 1761313163944
+  "timestamp": 1761372490846
 }
