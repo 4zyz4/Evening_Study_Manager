@@ -299,7 +299,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             touchDragPreview.style.left = `${touch.clientX}px`;
             touchDragPreview.style.top = `${touch.clientY}px`;
-            const elementUnderTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+            
+            // 修复：使用elementFromPoint穿透元素找到真正的office-box
+            let elementUnderTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+            
+            // 循环查找父元素直到找到office-box或者到达根元素
+            while (elementUnderTouch && !elementUnderTouch.classList.contains('office-box') && elementUnderTouch !== document.body) {
+                elementUnderTouch = elementUnderTouch.parentElement;
+            }
+            
             if (currentMode === 'registration' && elementUnderTouch && elementUnderTouch.classList.contains('office-box')) {
                 officeBoxes.forEach(box => box.classList.remove('highlight'));
                 elementUnderTouch.classList.add('highlight');
@@ -328,7 +336,15 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
         const touch = e.changedTouches[0];
-        const elementUnderTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+        
+        // 修复：使用elementFromPoint穿透元素找到真正的office-box
+        let elementUnderTouch = document.elementFromPoint(touch.clientX, touch.clientY);
+        
+        // 循环查找父元素直到找到office-box或者到达根元素
+        while (elementUnderTouch && !elementUnderTouch.classList.contains('office-box') && elementUnderTouch !== document.body) {
+            elementUnderTouch = elementUnderTouch.parentElement;
+        }
+        
         const studentName = this.dataset.student;
         if (currentMode === 'registration' && studentName) {
             if (elementUnderTouch && elementUnderTouch.classList.contains('office-box')) {
