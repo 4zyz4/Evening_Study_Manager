@@ -705,6 +705,35 @@ def load_state_from_disk():
                             # 如果解析失败，保持原值
                             pass
         
+        # 检查并清理无效记录：不是今天开始但未返回且持续时间超过500分钟的记录
+        current_date = datetime.now().date()
+        if "studentRecords" in data:
+            for student_name, student_data in data["studentRecords"].items():
+                if "records" in student_data:
+                    # 从后往前遍历，避免删除元素时索引变化的问题
+                    i = len(student_data["records"]) - 1
+                    while i >= 0:
+                        record = student_data["records"][i]
+                        # 检查未返回的记录
+                        if record.get("returnTime") is None and record.get("departureTime"):
+                            try:
+                                departure_time = parse_datetime_flexible(record["departureTime"])
+                                if departure_time:
+                                    # 检查是否不是今天开始的
+                                    if departure_time.date() != current_date:
+                                        # 计算持续时间（分钟）
+                                        duration = (datetime.now() - departure_time).total_seconds() / 60
+                                        # 如果持续时间超过500分钟，则删除该记录
+                                        if duration > 500:
+                                            student_data["records"].pop(i)
+                                            student_data["count"] = max(0, student_data["count"] - 1)
+                                            # 更新总时长
+                                            student_data["totalDuration"] = max(0, student_data["totalDuration"] - record.get("duration", 0))
+                            except Exception:
+                                # 忽略处理异常的记录
+                                pass
+                        i -= 1
+        
         app_state = data
         print("State loaded from disk.")
         return True

@@ -82,19 +82,41 @@
       "records": []
     },
     "吴雨菲": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 1,
+      "totalDuration": 1,
+      "records": [
+        {
+          "departureTime": 1764472350040,
+          "office": "语文",
+          "returnTime": 1764472354618,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "邱雨馨": {
-      "count": 1,
-      "totalDuration": 6,
+      "count": 3,
+      "totalDuration": 8,
       "records": [
         {
           "departureTime": 1764164469306,
           "office": "数学",
           "returnTime": 1764164837233,
           "duration": 6,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472339850,
+          "office": "语文",
+          "returnTime": 1764472343396,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472346738,
+          "office": "语文",
+          "returnTime": 1764472353852,
+          "duration": 1,
           "notes": ""
         }
       ]
@@ -110,9 +132,31 @@
       "records": []
     },
     "邬雨峻": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 3,
+      "totalDuration": 3,
+      "records": [
+        {
+          "departureTime": 1764472336215,
+          "office": "语文",
+          "returnTime": 1764472337290,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472339321,
+          "office": "语文",
+          "returnTime": 1764472343238,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472363746,
+          "office": "语文",
+          "returnTime": 1764472368395,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "赵紫雯": {
       "count": 0,
@@ -130,19 +174,48 @@
       "records": []
     },
     "杨璐萱": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 1,
+      "totalDuration": 1,
+      "records": [
+        {
+          "departureTime": 1764472350489,
+          "office": "语文",
+          "returnTime": 1764472354779,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "胡馨文": {
-      "count": 1,
-      "totalDuration": 6,
+      "count": 4,
+      "totalDuration": 9,
       "records": [
         {
           "departureTime": 1764164471156,
           "office": "数学",
           "returnTime": 1764164837380,
           "duration": 6,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472340464,
+          "office": "语文",
+          "returnTime": 1764472343550,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472345947,
+          "office": "语文",
+          "returnTime": 1764472353722,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472367114,
+          "office": "语文",
+          "returnTime": 1764472369134,
+          "duration": 1,
           "notes": ""
         }
       ]
@@ -186,8 +259,8 @@
       ]
     },
     "杨广瀚": {
-      "count": 2,
-      "totalDuration": 2,
+      "count": 3,
+      "totalDuration": 3,
       "records": [
         {
           "departureTime": 1764164821390,
@@ -202,18 +275,39 @@
           "returnTime": 1764164833412,
           "duration": 1,
           "notes": ""
+        },
+        {
+          "departureTime": 1764472348896,
+          "office": "语文",
+          "returnTime": 1764472354462,
+          "duration": 1,
+          "notes": ""
         }
       ]
     },
     "潘昊岩": {
-      "count": 1,
-      "totalDuration": 6,
+      "count": 3,
+      "totalDuration": 8,
       "records": [
         {
           "departureTime": 1764164472622,
           "office": "数学",
           "returnTime": 1764164837528,
           "duration": 6,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472341144,
+          "office": "语文",
+          "returnTime": 1764472343674,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472347174,
+          "office": "语文",
+          "returnTime": 1764472354003,
+          "duration": 1,
           "notes": ""
         }
       ]
@@ -249,19 +343,41 @@
       "records": []
     },
     "何鑫": {
-      "count": 0,
-      "totalDuration": 0,
-      "records": []
+      "count": 1,
+      "totalDuration": 1,
+      "records": [
+        {
+          "departureTime": 1764472350982,
+          "office": "语文",
+          "returnTime": 1764472354943,
+          "duration": 1,
+          "notes": ""
+        }
+      ]
     },
     "郑耀鹏": {
-      "count": 1,
-      "totalDuration": 3,
+      "count": 3,
+      "totalDuration": 5,
       "records": [
         {
           "departureTime": 1764164635077,
           "office": "数学",
           "returnTime": 1764164838163,
           "duration": 3,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472341686,
+          "office": "语文",
+          "returnTime": 1764472343828,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472347628,
+          "office": "语文",
+          "returnTime": 1764472354144,
+          "duration": 1,
           "notes": ""
         }
       ]
@@ -297,8 +413,8 @@
       "records": []
     },
     "高博": {
-      "count": 1,
-      "totalDuration": 3,
+      "count": 2,
+      "totalDuration": 4,
       "records": [
         {
           "departureTime": 1764164636517,
@@ -306,18 +422,39 @@
           "returnTime": 1764164838787,
           "duration": 3,
           "notes": ""
+        },
+        {
+          "departureTime": 1764472351525,
+          "office": "语文",
+          "returnTime": 1764472355103,
+          "duration": 1,
+          "notes": ""
         }
       ]
     },
     "潘轩宇": {
-      "count": 1,
-      "totalDuration": 3,
+      "count": 3,
+      "totalDuration": 5,
       "records": [
         {
           "departureTime": 1764164635764,
           "office": "数学",
           "returnTime": 1764164838317,
           "duration": 3,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472342312,
+          "office": "语文",
+          "returnTime": 1764472343983,
+          "duration": 1,
+          "notes": ""
+        },
+        {
+          "departureTime": 1764472348225,
+          "office": "语文",
+          "returnTime": 1764472354302,
+          "duration": 1,
           "notes": ""
         }
       ]
@@ -430,5 +567,5 @@
     " ": []
   },
   "tasks": [],
-  "timestamp": 1764164839124
+  "timestamp": 1764472369137
 }
