@@ -336,6 +336,7 @@ header {
     border: 2px dashed rgba(100, 100, 100, 0.1);
     color: transparent;
 }
+/*
 .seat.violation {
     background: rgba(219, 68, 55, 0.8);
     animation: pulse 1s infinite;
@@ -351,6 +352,7 @@ header {
         background-color: rgba(219, 150, 55, 0.8);
     }
 }
+*/
 .stats-table tr.violation-row {
     background-color: rgba(255, 200, 0, 0.2);
     animation: yellow-pulse 2s infinite;
@@ -508,12 +510,14 @@ header {
 .violation-btn:hover {
     background: rgba(51, 102, 204, 0.9);
 }
+/*
 .violation-btn {
     background: rgba(204, 57, 98, 0.8);
 }
 .violation-btn:hover {
     background: rgba(173, 48, 83, 0.9);
 }
+*/
 .task-manager {
     flex: 1;
     display: flex;

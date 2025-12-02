@@ -143,124 +143,6 @@ class TKinterDialogs:
         finally:
             root.destroy()
     
-    def show_violation_modal(self, student_name):
-        """显示违纪记录模态框"""
-        root = tk.Tk()
-        root.title("记录违纪行为")
-        root.geometry("620x320")
-        root.configure(bg=self.styles["bg_color"])
-        root.attributes('-topmost', True)  # 窗口置顶
-        
-        # 设置窗口居中
-        root.eval('tk::PlaceWindow . center')
-        
-        result = {"notes": "", "confirmed": False}
-        
-        def on_confirm():
-            result["notes"] = text_area.get("1.0", "end-1c").strip()
-            result["confirmed"] = True
-            root.quit()
-            
-        def on_cancel():
-            result["confirmed"] = False
-            root.quit()
-        
-        # 主框架使用grid布局
-        main_frame = tk.Frame(root, bg=self.styles["bg_color"], padx=20, pady=20)
-        main_frame.grid(row=0, column=0, sticky="nsew")
-        root.grid_rowconfigure(0, weight=1)
-        root.grid_columnconfigure(0, weight=1)
-        
-        # 标题 (第0行)
-        title_label = tk.Label(
-            main_frame, 
-            text="记录违纪行为", 
-            font=self.styles["title_font"],
-            bg=self.styles["bg_color"],
-            fg=self.styles["text_color"]
-        )
-        title_label.grid(row=0, column=0, pady=(0, 10), sticky="w")
-        
-        # 学生姓名标签 (第1行)
-        student_label = tk.Label(
-            main_frame, 
-            text=f"学生：{student_name}", 
-            font=self.styles["header_font"],
-            bg=self.styles["bg_color"],
-            fg=self.styles["text_color"]
-        )
-        student_label.grid(row=1, column=0, pady=(0, 15), sticky="w")
-        
-        # 备注标签 (第2行)
-        notes_label = tk.Label(
-            main_frame,
-            text="违纪详情：",
-            font=self.styles["font_family"],
-            bg=self.styles["bg_color"],
-            fg=self.styles["text_color"],
-            anchor="w"
-        )
-        notes_label.grid(row=2, column=0, pady=(0, 5), sticky="w")
-        
-        # 备注文本框框架 (第3行)
-        text_frame = tk.Frame(main_frame, relief=tk.SOLID, borderwidth=1, bg=self.styles["border_color"])
-        text_frame.grid(row=3, column=0, sticky="nsew", pady=(0, 20))
-        
-        # 配置行权重
-        main_frame.grid_rowconfigure(3, weight=1)  # 文本框行可扩展
-        main_frame.grid_rowconfigure(4, weight=0)   # 按钮行固定高度
-        main_frame.grid_columnconfigure(0, weight=1)
-        
-        # 备注文本框
-        text_area = tk.Text(
-            text_frame,
-            font=self.styles["font_family"],
-            bd=0,
-            highlightthickness=0,
-            padx=5,
-            pady=5,
-            height=10  # 固定行数
-        )
-        text_area.pack(fill=tk.BOTH, expand=True)
-        
-        # 按钮框架 (第4行)
-        button_frame = tk.Frame(main_frame, bg=self.styles["bg_color"])
-        button_frame.grid(row=4, column=0, sticky="ew")
-        
-        # 确定按钮
-        confirm_btn = tk.Button(
-            button_frame,
-            text="确定",
-            command=on_confirm,
-            bg=self.styles["button_color"],
-            fg="white",
-            font=self.styles["font_family"],
-            relief=tk.FLAT,
-            padx=20
-        )
-        confirm_btn.pack(side=tk.RIGHT, padx=(10, 0))
-        
-        # 取消按钮
-        cancel_btn = tk.Button(
-            button_frame,
-            text="取消",
-            command=on_cancel,
-            bg=self.styles["cancel_button_color"],
-            fg="white",
-            font=self.styles["font_family"],
-            relief=tk.FLAT,
-            padx=20
-        )
-        cancel_btn.pack(side=tk.RIGHT)
-        
-        try:
-            root.mainloop()
-            return {"success": True, "result": result}
-        except Exception as e:
-            return {"success": False, "error": str(e)}
-        finally:
-            root.destroy()
-    
     def show_task_details_modal(self, student_name, records):
         """显示任务详情模态框"""
         root = tk.Tk()
@@ -410,135 +292,6 @@ class TKinterDialogs:
             except Exception:
                 pass
     
-    def show_violation_details_modal(self, student_name, records):
-        """显示违纪详情模态框"""
-        root = tk.Tk()
-        root.title(f"{student_name} 的违纪记录详情")
-        root.geometry("1000x450")
-        root.minsize(1000, 450)
-        root.configure(bg=self.styles["bg_color"])
-        root.attributes('-topmost', True)  # 窗口置顶
-        
-        result = {"action": None, "index": None}  # action: "delete" 或 None
-        
-        def on_delete(index):
-            # 直接触发删除，让后端处理密码验证
-            result["action"] = "delete"
-            result["index"] = index
-            root.quit()
-        
-        def on_close():
-            result["action"] = None
-            root.quit()
-        
-        # 创建主框架
-        main_frame = tk.Frame(root, bg=self.styles["bg_color"], padx=20, pady=20)
-        main_frame.pack(fill=tk.BOTH, expand=True)
-        
-        # 标题
-        title_label = tk.Label(
-            main_frame, 
-            text=f"{student_name} 的违纪记录详情", 
-            font=self.styles["title_font"],
-            bg=self.styles["bg_color"],
-            fg=self.styles["text_color"]
-        )
-        title_label.pack(pady=(0, 15))
-        
-        # 创建表格框架
-        table_container = tk.Frame(main_frame, bg=self.styles["bg_color"])
-        table_container.pack(fill=tk.BOTH, expand=True)
-        
-        # 创建表格画布和滚动区域
-        canvas = tk.Canvas(table_container, bg=self.styles["bg_color"], highlightthickness=0)
-        scrollbar = tk.Scrollbar(table_container, orient=tk.VERTICAL, command=canvas.yview)
-        scrollable_frame = tk.Frame(canvas, bg=self.styles["bg_color"])
-        
-        scrollable_frame.bind(
-            "<Configure>",
-            lambda e: canvas.configure(scrollregion=canvas.bbox("all"))
-        )
-        
-        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
-        canvas.configure(yscrollcommand=scrollbar.set)
-        
-        # 表格头部
-        headers_frame = tk.Frame(scrollable_frame, bg=self.styles["header_color"], relief=tk.RAISED, bd=1)
-        headers_frame.pack(fill=tk.X, pady=(0, 5))
-        
-        tk.Label(headers_frame, text="时间", font=self.styles["header_font"], bg=self.styles["header_color"], fg="white", width=20, anchor="w").pack(side=tk.LEFT, padx=5, pady=5)
-        tk.Label(headers_frame, text="备注", font=self.styles["header_font"], bg=self.styles["header_color"], fg="white", width=30, anchor="w").pack(side=tk.LEFT, padx=5, pady=5)
-        tk.Label(headers_frame, text="操作", font=self.styles["header_font"], bg=self.styles["header_color"], fg="white", width=10, anchor="center").pack(side=tk.LEFT, padx=5, pady=5)
-        
-        # 添加记录
-        if records and len(records) > 0:
-            for i, record in enumerate(records):
-                # 创建行框架
-                row_frame = tk.Frame(scrollable_frame, bg="white" if i % 2 == 0 else "#f8f8f8", relief=tk.SOLID, bd=1)
-                row_frame.pack(fill=tk.X, pady=2)
-                
-                # 格式化时间 - 增强处理逻辑
-                if "time" in record and record["time"]:
-                    try:
-                        parsed_time = parse_datetime_flexible(record["time"])
-                        if parsed_time:
-                            record_time = parsed_time.strftime('%Y-%m-%d %H:%M')
-                        else:
-                            record_time = "时间格式错误"
-                    except Exception:
-                        record_time = "时间解析失败"
-                else:
-                    record_time = "无时间"
-                
-                # 格式化备注
-                notes = record.get("notes", "") if record.get("notes") else "无备注"
-                
-                # 创建单元格
-                tk.Label(row_frame, text=record_time, font=self.styles["font_family"], bg=row_frame.cget("bg"), width=20, anchor="w").pack(side=tk.LEFT, padx=5, pady=5)
-                tk.Label(row_frame, text=notes, font=self.styles["font_family"], bg=row_frame.cget("bg"), width=30, anchor="w").pack(side=tk.LEFT, padx=5, pady=5)
-                
-                # 删除按钮
-                delete_btn = tk.Button(
-                    row_frame,
-                    text="删除",
-                    command=lambda idx=i: on_delete(idx),
-                    bg=self.styles["cancel_button_color"],
-                    fg="white",
-                    font=self.styles["font_family"],
-                    relief=tk.FLAT,
-                    padx=10
-                )
-                delete_btn.pack(side=tk.LEFT, padx=5, pady=5)
-        else:
-            # 无记录提示
-            no_records_frame = tk.Frame(scrollable_frame, bg=self.styles["bg_color"])
-            no_records_frame.pack(fill=tk.BOTH, expand=True, pady=50)
-            tk.Label(no_records_frame, text="暂无违纪记录", font=self.styles["font_family"], bg=self.styles["bg_color"], fg=self.styles["text_color"]).pack()
-        
-        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-        scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-        
-        # 居中显示窗口
-        root.eval('tk::PlaceWindow . center')
-        
-        # 绑定鼠标滚轮事件
-        def _on_mousewheel(event):
-            canvas.yview_scroll(int(-1*(event.delta/120)), "units")
-        
-        canvas.bind_all("<MouseWheel>", _on_mousewheel)
-        
-        try:
-            root.mainloop()
-            return {"success": True, "result": result}
-        except Exception as e:
-            return {"success": False, "error": str(e)}
-        finally:
-            try:
-                canvas.unbind_all("<MouseWheel>")
-                root.destroy()
-            except Exception:
-                pass
-    
     def show_delete_confirm_modal(self):
         """显示删除确认模态框"""
         # 直接返回True，跳过密码验证
@@ -564,7 +317,7 @@ app_state = {
     "currentStudents": DEFAULT_STUDENTS.copy(),
     "studentsInOffice": {},
     "studentRecords": {},
-    "violationRecords": {},
+    "violationRecords": {},  # 将被废弃但暂时保留以保持兼容性
     "tasks": [],
     "timestamp": int(datetime.now().timestamp() * 1000)
 }
@@ -632,7 +385,7 @@ def create_default_data():
         "currentStudents": DEFAULT_STUDENTS.copy(),
         "studentsInOffice": {},
         "studentRecords": {student: {"count": 0, "totalDuration": 0, "records": []} for student in DEFAULT_STUDENTS},
-        "violationRecords": {student: [] for student in DEFAULT_STUDENTS},
+        "violationRecords": {student: [] for student in DEFAULT_STUDENTS},  # 将被废弃但暂时保留以保持兼容性
         "tasks": [],
         "timestamp": int(datetime.now().timestamp() * 1000)
     }
@@ -690,20 +443,6 @@ def load_state_from_disk():
                             except Exception:
                                 # 如果解析失败，保持原值
                                 pass
-        
-        # 处理违规记录中的时间格式
-        if "violationRecords" in data:
-            for student_name, violations in data["violationRecords"].items():
-                for violation in violations:
-                    if "time" in violation and violation["time"]:
-                        try:
-                            parsed_time = parse_datetime_flexible(violation["time"])
-                            if parsed_time:
-                                # 转换为毫秒时间戳以保持一致性
-                                violation["time"] = int(parsed_time.timestamp() * 1000)
-                        except Exception:
-                            # 如果解析失败，保持原值
-                            pass
         
         # 检查并清理无效记录：不是今天开始但未返回且持续时间超过500分钟的记录
         current_date = datetime.now().date()
@@ -911,17 +650,11 @@ class Api:
         """显示自定义输入框"""
         return self.dialogs.show_custom_prompt(message, default_value)
 
-    def show_violation_modal(self, student_name):
-        """显示违纪记录模态框"""
-        return self.dialogs.show_violation_modal(student_name)
 
     def show_task_details_modal(self, student_name, records):
         """显示任务详情模态框"""
         return self.dialogs.show_task_details_modal(student_name, records)
 
-    def show_violation_details_modal(self, student_name, records):
-        """显示违纪详情模态框"""
-        return self.dialogs.show_violation_details_modal(student_name, records)
 
     def show_delete_confirm_modal(self):
         """显示删除确认模态框"""
@@ -934,9 +667,7 @@ class Api:
         for student in DEFAULT_STUDENTS:
             if student not in app_state["studentRecords"]:
                  app_state["studentRecords"][student] = {"count": 0, "totalDuration": 0, "records": []}
-            if student not in app_state["violationRecords"]:
-                 app_state["violationRecords"][student] = []
-            
+
             # 处理学生记录中的时间格式
             if "studentRecords" in app_state and student in app_state["studentRecords"]:
                 student_data = app_state["studentRecords"][student]
@@ -963,20 +694,6 @@ class Api:
                             except Exception:
                                 # 如果解析失败，保持原值
                                 pass
-        
-            # 处理违规记录中的时间格式
-            if "violationRecords" in app_state and student in app_state["violationRecords"]:
-                violations = app_state["violationRecords"][student]
-                for violation in violations:
-                    if "time" in violation and violation["time"]:
-                        try:
-                            parsed_time = parse_datetime_flexible(violation["time"])
-                            if parsed_time:
-                                # 转换为毫秒时间戳以保持一致性
-                                violation["time"] = int(parsed_time.timestamp() * 1000)
-                        except Exception:
-                            # 如果解析失败，保持原值
-                            pass
         
         return {'success': True, 'data': app_state}
 
@@ -1104,32 +821,14 @@ class Api:
         except Exception as e:
             return {'success': False, 'error': f'Failed to delete task: {e}'}
 
-    def add_violation(self, student_name, notes=""):
-        """添加违纪记录"""
-        if not verify_password():
-            return {'success': False, 'error': '密码错误'}
-
-        try:
-            if student_name not in app_state["violationRecords"]:
-                app_state["violationRecords"][student_name] = []
-            new_violation = {
-                "time": int(datetime.now().timestamp() * 1000),
-                "notes": notes
-            }
-            app_state["violationRecords"][student_name].append(new_violation)
-            save_state_to_disk()
-            return {'success': True, 'message': 'Violation recorded'}
-        except Exception as e:
-            return {'success': False, 'error': f'Failed to record violation: {e}'}
-
 
     def delete_record(self, student_name, record_type, index):
         """删除记录（任务记录或违纪记录）"""
         try:
-
+            # 恢复密码验证功能
             if not verify_password():
                 return {'success': False, 'error': '密码错误'}
-        
+
             if record_type == "record":
                 if student_name in app_state["studentRecords"] and 0 <= index < len(app_state["studentRecords"][student_name]["records"]):
                     app_state["studentRecords"][student_name]["records"].pop(index)
@@ -1157,13 +856,6 @@ class Api:
                 else:
                     return {'success': False, 'error': 'Record not found'}
 
-            elif record_type == "violation":
-                if student_name in app_state["violationRecords"] and 0 <= index < len(app_state["violationRecords"][student_name]):
-                    app_state["violationRecords"][student_name].pop(index)
-                    save_state_to_disk()
-                    return {'success': True, 'message': 'Violation deleted'}
-                else:
-                     return {'success': False, 'error': 'Violation not found'}
             else:
                 return {'success': False, 'error': 'Invalid record type'}
 

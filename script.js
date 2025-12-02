@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return window.pywebview.api.show_custom_prompt(message, defaultValue);
         },
+        /*
         showViolationModal: function(studentName) {
             if (!this.isAvailable()) {
                 console.warn('pywebview not available, cannot show violation modal.');
@@ -64,6 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             return window.pywebview.api.show_violation_modal(studentName);
         },
+        */
         showDeleteConfirmModal: function() {
             if (!this.isAvailable()) {
                 console.warn('pywebview not available, cannot show delete confirm modal.');
@@ -147,7 +149,6 @@ document.addEventListener('DOMContentLoaded', function() {
         currentStudents: [],
         studentsInOffice: {},
         studentRecords: {},
-        violationRecords: {},
         tasks: []
     };
 
@@ -255,7 +256,8 @@ document.addEventListener('DOMContentLoaded', function() {
         addEventListenerSafely(seat, 'touchmove', handleTouchMove, { passive: false });
         addEventListenerSafely(seat, 'touchend', handleTouchEnd);
         addEventListenerSafely(seat, 'touchcancel', handleTouchCancel);
-        addEventListenerSafely(seat, 'contextmenu', handleSeatRightClick);
+        // 移除违纪记录的右键点击事件监听器
+        // addEventListenerSafely(seat, 'contextmenu', handleSeatRightClick);
         
         // 添加拖拽相关的事件监听器
         addEventListenerSafely(seat, 'dragover', handleSeatDragOver);
@@ -474,12 +476,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 } else {
                     seat.draggable = true;
                 }
-                const violationCount = appState.violationRecords[studentName] ? appState.violationRecords[studentName].length : 0;
-                if (violationCount > 0) {
-                    seat.classList.add('violation');
-                } else {
-                    seat.classList.remove('violation');
-                }
             } else {
                 seat.className = 'seat empty';
                 seat.draggable = false;
@@ -489,37 +485,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function handleSeatRightClick(e) {
-        e.preventDefault();
-        const studentName = this.dataset.student;
-        if (!studentName || studentName.trim() === '') {
-            return;
-        };
-        currentViolationStudent = studentName;
-        
-        // 使用Python端的违纪记录模态框
-        pywebUI.showViolationModal(studentName).then((response) => {
-            if (!response.success) {
-                console.error('无法显示违纪记录模态框:', response.error);
-                return;
-            }
-            
-            const result = response.result;
-            if (result.confirmed) {
-                const notes = result.notes;
-                pywebview.api.add_violation(studentName, notes)
-                    .then(response => {
-                        if (response.success) {
-                            return pywebview.api.get_full_state();
-                        } else {
-                            throw new Error(response.error);
-                        }
-                    })
-                    .then(response => updateAndRenderAll(response.data))
-                    .catch(error => console.error('记录违纪失败: ' + error.message));
-            }
-        });
-    }
 
     function handleDragStart(e) {
         draggedStudent = this;
@@ -1269,12 +1234,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderStatisticsTable() {
         statsTableBody.innerHTML = '';
         const sortedStudents = [...appState.currentStudents].sort((a, b) => {
-            const violationCountA = appState.violationRecords[a] ? appState.violationRecords[a].length : 0;
-            const violationCountB = appState.violationRecords[b] ? appState.violationRecords[b].length : 0;
-            if (violationCountA === violationCountB) {
-                return a.localeCompare(b);
-            }
-            return violationCountB - violationCountA;
+            return a.localeCompare(b);
         });
         sortedStudents.forEach(student => {
 
@@ -1317,22 +1277,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
             detailsTd.appendChild(detailsBtn);
             tr.appendChild(detailsTd);
-            const violationCountTd = document.createElement('td');
-            violationCountTd.textContent = violationCount;
-            tr.appendChild(violationCountTd);
-            const violationTd = document.createElement('td');
-            const violationBtn = document.createElement('button');
-            violationBtn.className = 'violation-btn';
-            violationBtn.textContent = '违纪详情';
-            addEventListenerSafely(violationBtn, 'touchend', function(e) {
-                e.preventDefault();
-                showViolationDetailsModal(student);
-            });
-            addEventListenerSafely(violationBtn, 'click', function() {
-                showViolationDetailsModal(student);
-            });
-            violationTd.appendChild(violationBtn);
-            tr.appendChild(violationTd);
             statsTableBody.appendChild(tr);
         });
         updateSeatHighlights();
@@ -1344,12 +1288,7 @@ document.addEventListener('DOMContentLoaded', function() {
         seats.forEach(seat => {
             const studentName = seat.dataset.student;
             if (studentName) {
-                const violationCount = appState.violationRecords[studentName] ? appState.violationRecords[studentName].length : 0;
-                if (violationCount > 0) {
-                    seat.classList.add('violation');
-                } else {
-                    seat.classList.remove('violation');
-                }
+                seat.classList.remove('violation');
             }
         });
     }
@@ -1386,37 +1325,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => console.error('显示任务详情失败: ' + error.message));
     }
 
-    function showViolationDetailsModal(student) {
-        // 获取学生违纪记录
-        const records = appState.violationRecords[student] ? appState.violationRecords[student] : [];
-        
-        // 直接调用Python端的违纪详情模态框
-        pywebview.api.show_violation_details_modal(student, records)
-            .then(response => {
-                if (!response.success) {
-                    console.error('无法显示违纪详情模态框:', response.error);
-                    return;
-                }
-                
-                const result = response.result;
-                // 如果用户执行了删除操作
-                if (result.action === "delete" && result.index !== null) {
-                    pywebview.api.delete_record(student, 'violation', result.index)
-                        .then(response => {
-                            if (response.success) {
-                                return pywebview.api.get_full_state();
-                            } else {
-                                throw new Error(response.error);
-                            }
-                        })
-                        .then(response => {
-                            updateAndRenderAll(response.data);
-                        })
-                        .catch(error => console.error('删除违纪记录失败: ' + error.message));
-                }
-            })
-            .catch(error => console.error('显示违纪详情失败: ' + error.message));
-    }
 
     // 页面加载完成后立即初始化
     init().then(() => {
