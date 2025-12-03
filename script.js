@@ -239,9 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     let touchDraggedStudent = null;
-    let touchDragTimeout = null;
     let longPressStartTime = 0;
-    const LONG_PRESS_DURATION = 500;
     let isLongPress = false;
     let touchStartX = 0;
     let touchStartY = 0;
@@ -276,13 +274,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const touch = e.touches[0];
         touchStartX = touch.clientX;
         touchStartY = touch.clientY;
-        touchDragTimeout = setTimeout(() => {
-            if (touchDraggedStudent === this && !isLongPress) {
-                isLongPress = true;
-                handleSeatRightClick.call(this, e);
-            }
-        }, LONG_PRESS_DURATION);
-    }
+        }
 
     function handleTouchMove(e) {
         if (!touchDraggedStudent || touchDraggedStudent !== this) return;
@@ -290,8 +282,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const deltaX = Math.abs(touch.clientX - touchStartX);
         const deltaY = Math.abs(touch.clientY - touchStartY);
         if (!isLongPress && (deltaX > MOVE_THRESHOLD || deltaY > MOVE_THRESHOLD)) {
-            clearTimeout(touchDragTimeout);
-            touchDragTimeout = null;
             e.preventDefault();
             if (!touchDragPreview) {
                 touchDragPreview = document.createElement('div');
@@ -322,10 +312,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function handleTouchEnd(e) {
         if (!touchDraggedStudent || touchDraggedStudent !== this) return;
-        if (touchDragTimeout) {
-            clearTimeout(touchDragTimeout);
-            touchDragTimeout = null;
-        }
         if (touchDragPreview) {
             document.body.removeChild(touchDragPreview);
             touchDragPreview = null;
@@ -384,10 +370,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function handleTouchCancel(e) {
-        if (touchDragTimeout) {
-            clearTimeout(touchDragTimeout);
-            touchDragTimeout = null;
-        }
         officeBoxes.forEach(box => box.classList.remove('highlight'));
         document.querySelectorAll('.seat').forEach(s => s.classList.remove('dragging-over'));
         touchDraggedStudent = null;

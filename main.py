@@ -872,4 +872,4 @@ if __name__ == '__main__':
         js_api=api,
         maximized=True
     )
-    webview.start(debug=False,gui="edgechromium")
+    webview.start(debug=True,gui="edgechromium")
