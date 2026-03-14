@@ -1,0 +1,263 @@
+{
+  "currentStudents": [
+    "胡雨彤",
+    "葛雨璇",
+    "宋怡轩",
+    "范懿娇",
+    "叶梓涵",
+    "李嘉辉",
+    "陈子诚",
+    "陈文祥",
+    "魏乐嘉",
+    "司和兴",
+    "郑凯文",
+    "姚泓佚",
+    "孔祥涌",
+    "虞诗铭",
+    "徐子瑄",
+    "杨以婷",
+    "姜博仁",
+    "邓逸凡",
+    "周子越",
+    "杨阳",
+    "童佳颖",
+    "于晴",
+    "张雨泽",
+    "施嘉谐",
+    "黄子露",
+    "麻博涵",
+    "应轲",
+    "董一凡",
+    "宋璟祺",
+    "樊雨科",
+    "胡慧妍",
+    "阮浩宸",
+    "廖仕杰",
+    "黄一诚",
+    "吴经燮",
+    "于佳俊"
+  ],
+  "studentsInOffice": {},
+  "studentRecords": {
+    "胡雨彤": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "葛雨璇": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "宋怡轩": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "范懿娇": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "叶梓涵": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "李嘉辉": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "陈子诚": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "陈文祥": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "魏乐嘉": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "司和兴": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "郑凯文": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "姚泓佚": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "孔祥涌": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "虞诗铭": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "徐子瑄": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "杨以婷": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "姜博仁": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "邓逸凡": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "周子越": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "杨阳": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "童佳颖": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "于晴": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "张雨泽": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "施嘉谐": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "黄子露": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "麻博涵": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "应轲": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "董一凡": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "宋璟祺": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "樊雨科": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "胡慧妍": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "阮浩宸": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "廖仕杰": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "黄一诚": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "吴经燮": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    },
+    "于佳俊": {
+      "count": 0,
+      "totalDuration": 0,
+      "records": []
+    }
+  },
+  "violationRecords": {
+    "胡雨彤": [],
+    "葛雨璇": [],
+    "宋怡轩": [],
+    "范懿娇": [],
+    "叶梓涵": [],
+    "李嘉辉": [],
+    "陈子诚": [],
+    "陈文祥": [],
+    "魏乐嘉": [],
+    "司和兴": [],
+    "郑凯文": [],
+    "姚泓佚": [],
+    "孔祥涌": [],
+    "虞诗铭": [],
+    "徐子瑄": [],
+    "杨以婷": [],
+    "姜博仁": [],
+    "邓逸凡": [],
+    "周子越": [],
+    "杨阳": [],
+    "童佳颖": [],
+    "于晴": [],
+    "张雨泽": [],
+    "施嘉谐": [],
+    "黄子露": [],
+    "麻博涵": [],
+    "应轲": [],
+    "董一凡": [],
+    "宋璟祺": [],
+    "樊雨科": [],
+    "胡慧妍": [],
+    "阮浩宸": [],
+    "廖仕杰": [],
+    "黄一诚": [],
+    "吴经燮": [],
+    "于佳俊": []
+  },
+  "tasks": [],
+  "timestamp": 1773482620616
+}
