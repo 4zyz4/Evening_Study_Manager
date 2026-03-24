@@ -72,30 +72,3 @@ wan.main/
 ├── bg.jpg           # 背景图片
 └── classroom_data.json  # 数据存储文件（自动生成）
 ```
-
-## 技术栈
-
-- **后端**：Python, pywebview
-- **前端**：HTML, CSS, JavaScript
-- **数据存储**：JSON
-- **图表库**：Chart.js
-
-## 常见问题
-
-1. **数据丢失怎么办？**
-   - 系统会自动保存数据到 `classroom_data.json` 文件
-   - 建议定期备份此文件
-
-2. **如何修改学生名单？**
-   - 编辑 `main.py` 文件中的 `DEFAULT_STUDENTS` 列表
-
-3. **如何修改密码？**
-   - 编辑 `main.py` 文件中的 `PASSWORD` 变量
-
-## 许可证
-
-本项目仅供学习和个人使用。
-
-## 联系方式
-
-如有问题或建议，请联系项目维护者。
